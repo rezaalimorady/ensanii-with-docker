@@ -16,4 +16,16 @@ class OffAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Off, OffAdmin)
-admin.site.register(UseCodeByUser)
+
+
+class UseCodeByUserAdmin(admin.ModelAdmin):
+    def save_model(self, request, obj, form, change):
+        """save current user as author"""
+        obj.user = request.user
+        obj.save()
+
+    list_display = ('code', 'user')
+
+
+
+admin.site.register(UseCodeByUser, UseCodeByUserAdmin)
